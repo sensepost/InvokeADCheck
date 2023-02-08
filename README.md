@@ -40,6 +40,6 @@ This module is tested with the PowerShell testing framework Pester. To run all t
 
 ## Other Information
 
-**Author:** Justin Perdok
+**Author:** Justin Perdok, Niels Hofland
 
 **Website:** https://github.com/ocd-nl/ADChecks
