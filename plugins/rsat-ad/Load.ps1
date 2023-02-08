@@ -1,0 +1,1 @@
+Import-Module (Join-Path $MyModulePath 'plugins\rsat-ad\Microsoft.ActiveDirectory.Management.dll') -Force -Scope:Global
