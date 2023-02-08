@@ -1,13 +1,13 @@
 
-function Get-KerberosAccount {
+function Get-FunctionalLevel {
     <#
     .SYNOPSIS
 
-        This function enumerates the KRBTGT account for the current (or specified) domain and returns all relevant account information.
+        This function enumerates the Forest and Domain Functional Levels.
 
     .DESCRIPTION
 
-        This function enumerates the KRBTGT account for the current (or specified) domain and returns all relevant account information.
+        This function enumerates the Forest and Domain Functional Levels.
 
     .PARAMETER Server
 
@@ -20,26 +20,23 @@ function Get-KerberosAccount {
 
     .EXAMPLE
 
-        Get-KerberosAccount
+        Get-FunctionalLevel
 
-        Name                  : krbtgt
-        DistinguishedName     : CN=krbtgt,CN=Users,DC=offsec,DC=local
-        Created               : 30/01/2023 10:56:34
-        PasswordLastSet       : 30/01/2023 10:56:34
-        msds-keyversionnumber : 2
+        Forest Functional Level Domain Functional Level
+        ----------------------- -----------------------
+            Windows2012Forest       Windows2012Domain
 
     .EXAMPLE
 
         $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
         $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
-        Get-KerberosAccount -Credential $Credential
+        Get-FunctionalLevel
 
-        Name                  : krbtgt
-        DistinguishedName     : CN=krbtgt,CN=Users,DC=offsec,DC=local
-        Created               : 30/01/2023 10:56:34
-        PasswordLastSet       : 30/01/2023 10:56:34
-        msds-keyversionnumber : 2
+        Forest Functional Level Domain Functional Level
+        ----------------------- -----------------------
+            Windows2012Forest       Windows2012Domain
+
     #>
 
    [CmdletBinding(SupportsShouldProcess=$True)]
@@ -78,14 +75,12 @@ function Get-KerberosAccount {
         Try {
             If ($PSCmdlet.ShouldProcess("$($FunctionName) - Process WhatIf")) {
                 Try {
-                    $KRBTGT = Get-ADUser 'krbtgt' -Properties 'msds-keyversionnumber', 'Created', 'PasswordLastSet' @Arguments
+                    $ADForestFunctionalLevel = (Get-ADForest @Arguments).ForestMode
+                    $ADDomainFunctionalLevel = (Get-ADDomain @Arguments).DomainMode
 
                     $OutputObject = [PSCustomObject]@{
-                        'Name' = $KRBTGT.Name
-                        'DistinguishedName' = $KRBTGT.DistinguishedName
-                        'Created' = $KRBTGT.Created
-                        'PasswordLastSet' = $KRBTGT.PasswordLastSet
-                        'msds-keyversionnumber' = $KRBTGT.'msds-keyversionnumber'
+                        'Forest Functional Level' = $ADForestFunctionalLevel
+                        'Domain Functional Level' = $ADDomainFunctionalLevel
                     }
                 }
                 Catch {
