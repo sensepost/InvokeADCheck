@@ -3,11 +3,11 @@ function Get-MSDSMachineQuota {
     <#
     .SYNOPSIS
 
-        This function enumerates the Domain Controllers in the current (or specified) domain.
+        This function enumerates the MS-DS-Machine-Account-Quota attribute for the current (or specified) domain.
 
     .DESCRIPTION
 
-        This function enumerates the Domain Controllers in the current (or specified) domain.
+        This function enumerates the MS-DS-Machine-Account-Quota attribute for the current (or specified) domain.
 
     .PARAMETER Server
 
@@ -20,15 +20,18 @@ function Get-MSDSMachineQuota {
 
     .EXAMPLE
 
-        MSDSMachineQuota
+        Get-MSDSMachineQuota
 
+        DistinguishedName  ms-DS-MachineAccountQuota
+        -----------------  -------------------------
+        DC=offsec,DC=local                        10
 
     .EXAMPLE
 
         $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
         $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
-        MSDSMachineQuota
+        Get-MSDSMachineQuota
 
     #>
 
