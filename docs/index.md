@@ -1,27 +1,27 @@
-# Invoke-ADCheck
+# InvokeADCheck
 PowerShell module to check the security of Active Directory
 
-Project Site: [https://github.com/ocd-nl/Invoke-ADCheck](https://github.com/ocd-nl/Invoke-ADCheck)
+Project Site: [https://github.com/ocd-nl/InvokeADCheck](https://github.com/ocd-nl/InvokeADCheck)
 
-## What is Invoke-ADCheck?
+## What is InvokeADCheck?
 PowerShell module to check the security of Active Directory
 
-## Why use the Invoke-ADCheck Module?
+## Why use the InvokeADCheck Module?
 << Fill this out >>
 
 ### Features
 << Fill this out >>
 
 ## Installation
-Invoke-ADCheck is available on the [PowerShell Gallery](https://www.powershellgallery.com/packages/Invoke-ADCheck/).
+InvokeADCheck is available on the [PowerShell Gallery](https://www.powershellgallery.com/packages/InvokeADCheck/).
 
 To Inspect:
 ```powershell
-Save-Module -Name Invoke-ADCheck -Path <path>
+Save-Module -Name InvokeADCheck -Path <path>
 ```
 To install:
 ```powershell
-Install-Module -Name Invoke-ADCheck -Scope CurrentUser
+Install-Module -Name InvokeADCheck -Scope CurrentUser
 ```
 
 ## Contributing

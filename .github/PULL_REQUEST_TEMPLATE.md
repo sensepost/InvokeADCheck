@@ -1,4 +1,4 @@
-Thank you for creating a pull request to contribute to Invoke-ADCheck's code!
+Thank you for creating a pull request to contribute to InvokeADCheck's code!
 Before you open the request please review the following guidelines and tips to
 help it be more easily integrated:
 
@@ -19,7 +19,7 @@ can't immediately respond to every request.  There is no need to bump or check i
 on a pull request (it will clutter the discussion of the request).
 
 Also don't be worried if the request is closed or not integrated--sometimes the
-priorities of Invoke-ADCheck's GitHub code might not match the
+priorities of InvokeADCheck's GitHub code might not match the
 priorities of the pull request.  Don't fret, the open source community thrives on
 forks and GitHub makes it easy to keep your changes in a forked repo.
 

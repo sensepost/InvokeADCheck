@@ -1,10 +1,10 @@
-# Run this in an administrative PowerShell prompt to install the Invoke-ADCheck PowerShell module:
+# Run this in an administrative PowerShell prompt to install the InvokeADCheck PowerShell module:
 #
-# iex (New-Object Net.WebClient).DownloadString("https://github.com/ocd-nl/Invoke-ADCheck/raw/master/Install.ps1")
+# iex (New-Object Net.WebClient).DownloadString("https://github.com/ocd-nl/InvokeADCheck/raw/master/Install.ps1")
 
 # Some general variables
-$ModuleName = 'Invoke-ADCheck'
-$DownloadURL = 'https://github.com/ocd-nl/Invoke-ADCheck/raw/master/release/Invoke-ADCheck-current.zip'
+$ModuleName = 'InvokeADCheck'
+$DownloadURL = 'https://github.com/ocd-nl/InvokeADCheck/raw/master/release/InvokeADCheck-current.zip'
 
 # Download and install the module
 $webclient = New-Object System.Net.WebClient

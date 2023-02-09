@@ -15,11 +15,11 @@ if ((Get-Variable 'BuildEnv' -ErrorAction:SilentlyContinue) -eq $null) {
         Force = $False
         ForceInstallModule = $False
         Encoding = 'utf8'
-        ModuleToBuild = 'Invoke-ADCheck'
+        ModuleToBuild = 'InvokeADCheck'
         ModuleVersion = '0.0.1'
-        ModuleWebsite = 'https://github.com/ocd-nl/Invoke-ADCheck'
+        ModuleWebsite = 'https://github.com/ocd-nl/InvokeADCheck'
         ModuleCopyright = "(c) $((get-date).Year.ToString()) Justin Perdok. All rights reserved."
-        ModuleLicenseURI = 'https://github.com/ocd-nl/Invoke-ADCheck/LICENSE.md'
+        ModuleLicenseURI = 'https://github.com/ocd-nl/InvokeADCheck/LICENSE.md'
         ModuleTags = 'ActiveDirectory' -split ','
         ModuleAuthor = 'Justin Perdok'
         ModuleDescription = 'PowerShell module to check the security of Active Directory'
@@ -61,7 +61,7 @@ if ((Get-Variable 'BuildEnv' -ErrorAction:SilentlyContinue) -eq $null) {
         FunctionTemplates = "src\templates"    # Location of function template files (*.tem)
 
         # If you will be publishing to the PowerShell Gallery you will need a Nuget API key (can get from the website)
-        # You should NOT enter this key here but rather manually enter it in the Invoke-ADCheck.buildenvironment.json file with: Set-MBBuildEnvironment -NugetAPIKey '<key>'
+        # You should NOT enter this key here but rather manually enter it in the InvokeADCheck.buildenvironment.json file with: Set-MBBuildEnvironment -NugetAPIKey '<key>'
 
         NugetAPIKey  = ''
     }
@@ -69,7 +69,7 @@ if ((Get-Variable 'BuildEnv' -ErrorAction:SilentlyContinue) -eq $null) {
     ########################################
     # !! Please leave anything below this line alone !!
     ########################################
-    $PersistentBuildFile = join-path $PSScriptRoot "Invoke-ADCheck.buildenvironment.json"
+    $PersistentBuildFile = join-path $PSScriptRoot "InvokeADCheck.buildenvironment.json"
 
     # Load any persistent data (overrides anything in BuildEnv if the hash element exists)
     if ((Test-Path $PersistentBuildFile)) {

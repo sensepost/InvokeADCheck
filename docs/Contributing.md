@@ -1,6 +1,6 @@
-# Contributing to Invoke-ADCheck
+# Contributing to InvokeADCheck
 
-Project Site: [https://github.com/ocd-nl/Invoke-ADCheck](https://github.com/ocd-nl/Invoke-ADCheck)
+Project Site: [https://github.com/ocd-nl/InvokeADCheck](https://github.com/ocd-nl/InvokeADCheck)
 
 There are some important things to be aware of if you plan on contributing to this project.
 

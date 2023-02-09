@@ -1,6 +1,6 @@
 ﻿---
-external help file: Invoke-ADCheck-help.xml
-Module Name: Invoke-ADCheck
+external help file: InvokeADCheck-help.xml
+Module Name: InvokeADCheck
 online version:
 schema: 2.0.0
 ---
