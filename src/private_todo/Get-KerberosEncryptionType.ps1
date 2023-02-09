@@ -1,4 +1,4 @@
-﻿Function Get-KerberosEncryptionTypes {
+﻿Function Get-KerberosEncryptionType {
     # https://raw.githubusercontent.com/jeremyts/ActiveDirectoryDomainServices/master/Audit/Get-UserSupportedEncryptionTypes.ps1
     param (
         [int]$key
@@ -15,7 +15,7 @@
         "31" { $SupportedEncryptionTypes = @("DES_CRC", "DES_MD5", "RC4", "AES128", "AES256") }
         default { $SupportedEncryptionTypes = @("Undefined value of $key") }
     }
-    $SupportedEncryptionTypes            
+    $SupportedEncryptionTypes
 }
 $Users = Get-ADUser -Properties * -LdapFilter "(&(objectclass=user)(objectcategory=user)(msDS-SupportedEncryptionTypes=*)(!msDS-SupportedEncryptionTypes=0))" | Select-Object Name, @{N = "EncryptionTypes"; E = { Get-KerberosEncryptionTypes $($_."msDS-SupportedEncryptionTypes") } }
 ForEach ($User in $Users) {

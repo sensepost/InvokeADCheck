@@ -1,13 +1,13 @@
 Function Invoke-ADCheck {
     <#
     .SYNOPSIS
-    	TBD
+        TBD
     .DESCRIPTION
-      TBD
+        TBD
     .PARAMETER a
-      TBD
+        TBD
     .EXAMPLE
-      TBD
+        TBD
     #>
     [CmdletBinding(SupportsShouldProcess=$True)]
     Param (
@@ -24,7 +24,7 @@ Function Invoke-ADCheck {
                 }
                 If ($PSCmdlet.ShouldProcess("$($FunctionName) - Begin WhatIf")) {
                     $OutputObject = @()
-                }   
+                }
                 # Startup Logic here
             }
             Catch {

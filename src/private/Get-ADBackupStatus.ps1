@@ -1,19 +1,19 @@
 Function Get-ADBackupStatus {
-   <#
+    <#
     .SYNOPSIS
-		TBD
+        TBD
     .DESCRIPTION
-      TBD
+        TBD
     .PARAMETER Domain
-      TBD
+        TBD
     .PARAMETER ADDomainInfo
-      TBD
+        TBD
     .EXAMPLE
-		TBD
-   #>
+        TBD
+    #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   Param (
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         $Domain,
@@ -31,12 +31,12 @@ Function Get-ADBackupStatus {
             If ($PSCmdlet.ShouldProcess("$($FunctionName) - Begin WhatIf")) {
                 $OutputObject = @()
                 Try {
-                  $DomainDC             = $ADDomainInfo.PDCEmulator
-                  $ADDomainName         = $ADDomainInfo.DNSRoot
-                  [string[]]$Partitions = (Get-ADRootDSE -Server $DomainDC).namingContexts
-                  $contextType          = [System.DirectoryServices.ActiveDirectory.DirectoryContextType]::Domain
-                  $context              = new-object System.DirectoryServices.ActiveDirectory.DirectoryContext($contextType,$ADDomainName)
-                  $domainController     = [System.DirectoryServices.ActiveDirectory.DomainController]::findOne($context)
+                    $DomainDC = $ADDomainInfo.PDCEmulator
+                    $ADDomainName = $ADDomainInfo.DNSRoot
+                    [string[]]$Partitions = (Get-ADRootDSE -Server $DomainDC).namingContexts
+                    $contextType = [System.DirectoryServices.ActiveDirectory.DirectoryContextType]::Domain
+                    $context = new-object System.DirectoryServices.ActiveDirectory.DirectoryContext($contextType, $ADDomainName)
+                    $domainController = [System.DirectoryServices.ActiveDirectory.DomainController]::findOne($context)
                 }
                 Catch {
                     Write-Error -Message "$($FunctionName) - $($PSItem)" -ErrorAction Stop
@@ -52,10 +52,9 @@ Function Get-ADBackupStatus {
         Try {
             If ($PSCmdlet.ShouldProcess("$($FunctionName) - Process WhatIf")) {
                 Try {
-                    ForEach($partition in $partitions) {
+                    ForEach ($partition in $partitions) {
                         $domainControllerMetadata = $domainController.GetReplicationMetadata($partition)
-                        $dsaSignature             = $domainControllerMetadata.Item("dsaSignature")
-                        # Add results to Output Obj
+                        $dsaSignature = $domainControllerMetadata.Item("dsaSignature")
                         $outputobj += $dsaSignature
                     }
                 }

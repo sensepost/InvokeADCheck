@@ -1,4 +1,4 @@
-Thank you for opening an issue on ADChecks.  To
+Thank you for opening an issue on InvokeADCheck.  To
 improve the speed of resolution please review the following guidelines and
 common troubleshooting steps below before creating the issue:
 

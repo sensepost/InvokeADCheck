@@ -1,4 +1,4 @@
-# ADChecks
+# InvokeADCheck
 
 PowerShell module to check the security of Active Directory
 
@@ -13,12 +13,12 @@ PowerShell module to check the security of Active Directory
 ## Installation
 
 Powershell Gallery (PS 5.0, Preferred method)
-`install-module ADChecks`
+`install-module InvokeADCheck`
 
 Manual Installation
-`iex (New-Object Net.WebClient).DownloadString("https://github.com/ocd-nl/ADChecks/raw/master/Install.ps1")`
+`iex (New-Object Net.WebClient).DownloadString("https://github.com/ocd-nl/InvokeADCheck/raw/master/Install.ps1")`
 
-Or clone this repository to your local machine, extract, go to the .\releases\ADChecks directory
+Or clone this repository to your local machine, extract, go to the .\releases\InvokeADCheck directory
 and import the module to your session to test, but not install this module.
 
 ## Features
@@ -40,8 +40,8 @@ This module is tested with the PowerShell testing framework Pester. To run all t
 
 ## Other Information
 
-**Authors:** 
+**Authors:**
 - Justin Perdok
 - Niels Hofland
 
-**Website:** https://github.com/ocd-nl/ADChecks
+**Website:** https://github.com/ocd-nl/InvokeADCheck

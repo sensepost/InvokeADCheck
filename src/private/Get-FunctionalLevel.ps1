@@ -2,54 +2,40 @@
 function Get-FunctionalLevel {
     <#
     .SYNOPSIS
-
         This function enumerates the Forest and Domain Functional Levels.
-
     .DESCRIPTION
-
         This function enumerates the Forest and Domain Functional Levels.
-
     .PARAMETER Server
-
         Specifies an AD domain controller to bind to.
-
     .PARAMETER Credential
-
-        A [Management.Automation.PSCredential] object of alternate credentials
-        for connection to the remote system.
-
+        A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-
-        Get-FunctionalLevel
+        PS C:\ > Get-FunctionalLevel
 
         Forest Functional Level Domain Functional Level
         ----------------------- -----------------------
             Windows2012Forest       Windows2012Domain
-
     .EXAMPLE
-
-        $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-
-        Get-FunctionalLevel
+        PS C:\ > $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\ > $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\ > Get-FunctionalLevel
 
         Forest Functional Level Domain Functional Level
         ----------------------- -----------------------
             Windows2012Forest       Windows2012Domain
-
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    param (
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {
