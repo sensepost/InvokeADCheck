@@ -1,13 +1,13 @@
 
-function Get-MSDSMachineQuota {
+function Get-TombstoneLifetime {
     <#
     .SYNOPSIS
 
-        This function enumerates the MS-DS-Machine-Account-Quota attribute for the current (or specified) domain.
+        This function enumerates the Tombstone Lifetime attribute for the current (or specified) domain.
 
     .DESCRIPTION
 
-        This function enumerates the MS-DS-Machine-Account-Quota attribute for the current (or specified) domain.
+        This function enumerates the Tombstone Lifetime attribute for the current (or specified) domain.
 
     .PARAMETER Server
 
@@ -20,18 +20,18 @@ function Get-MSDSMachineQuota {
 
     .EXAMPLE
 
-        Get-MSDSMachineQuota
+        Get-TombstoneLifetime
 
-        DistinguishedName  ms-DS-MachineAccountQuota
-        -----------------  -------------------------
-        DC=offsec,DC=local                        10
+        TombstoneLifetime
+        -----------------
+                    180
 
     .EXAMPLE
 
         $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
         $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
-        Get-MSDSMachineQuota
+        Get-TombstoneLifetime
 
     #>
 
@@ -71,12 +71,12 @@ function Get-MSDSMachineQuota {
         Try {
             If ($PSCmdlet.ShouldProcess("$($FunctionName) - Process WhatIf")) {
                 Try {
-                    $MAQ = Get-ADObject -Identity ((Get-ADDomain @Arguments).distinguishedname) `
-                        -Properties 'DistinguishedName', 'ms-DS-MachineAccountQuota'
+                    $ADConfigurationNamingContext = (Get-ADRootDSE @Arguments).configurationNamingContext
+                    $TombstoneLifetime = Get-ADObject -Identity "CN=Directory Service,CN=Windows NT,CN=Services,$($ADConfigurationNamingContext)" `
+                         -Partition "$ADConfigurationNamingContext" -Properties TombstoneLifetime @Arguments
 
                     $OutputObject = [PSCustomObject]@{
-                        'DistinguishedName' = $MAQ.'DistinguishedName'
-                        'ms-DS-MachineAccountQuota' = $MAQ."ms-ds-machineaccountquota"
+                    'TombstoneLifetime' = $TombstoneLifetime.tombstoneLifetime
                     }
                 }
                 Catch {
