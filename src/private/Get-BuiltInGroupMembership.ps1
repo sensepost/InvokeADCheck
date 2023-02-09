@@ -110,21 +110,6 @@ function Get-BuiltInGroupMembership {
                             # $OutputObject += $obj
                         }
                     }
-
-
-
-                    # foreach ($DC in $DomainControllers) {
-                    #     $obj = New-Object System.Object
-                    #     $obj | Add-Member -type NoteProperty -Name 'Hostname' -Value $DC.HostName
-                    #     $obj | Add-Member -type NoteProperty -Name 'Operating System' -Value $DC.OperatingSystem
-                    #     $obj | Add-Member -type NoteProperty -Name 'Domain' -Value $DC.Domain
-                    #     $obj | Add-Member -type NoteProperty -Name 'Forest' -Value $DC.Forest
-                    #     $obj | Add-Member -type NoteProperty -Name 'FSMO Roles' -Value ([string]$DC.OperationMasterRoles).replace(' ', '; ')
-                    #     $obj | Add-Member -type NoteProperty -Name 'Global Catalogue' -Value $DC.IsGlobalCatalog
-                    #     $obj | Add-Member -type NoteProperty -Name 'Read-Only' -Value $DC.IsReadOnly
-                    #     $obj | Add-Member -type NoteProperty -Name 'Site' -Value $DC.Site
-                    #     $OutputObject += $obj
-                    # }
                 }
                 Catch {
                     Write-Error -Message "$($FunctionName) - $($PSItem)" -ErrorAction Stop
