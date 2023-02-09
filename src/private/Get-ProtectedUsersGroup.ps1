@@ -1,13 +1,17 @@
 
-function Get-DefaultAdministrator {
+function Get-ProtectedUsersGroup {
     <#
     .SYNOPSIS
 
-        This function enumerates the default Administrator account for the current (or specified) domain and returns all relevant account information.
+        This function enumerates the Protected Users group for the current (or specified) domain.
 
     .DESCRIPTION
 
-        This function enumerates the default Administrator account for the current (or specified) domain and returns all relevant account information.
+        This function enumerates the Protected Users group for the current (or specified) domain.
+
+    .PARAMETER Recursive
+
+        Recursively gather members of the Protected Users group.
 
     .PARAMETER Server
 
@@ -20,26 +24,35 @@ function Get-DefaultAdministrator {
 
     .EXAMPLE
 
-        Get-DefaultAdministrator
+        Get-ProtectedUsersGroup
 
-        Name                 : Administrator
-        Enabled              : True
-        Created              : 30/01/2023 10:55:56
-        PasswordLastSet      : 30/01/2023 10:49:30
-        LastLogonDate        : 30/01/2023 11:02:51
-        ServicePrincipalName : {MSSQLSvc/myhost-2.offsec.local:1432, MSSQLSvc/myhost.offsec.local:1433}
+        Name              : ELDON_KIRBY
+        DistinguishedName : CN=ELDON_KIRBY,OU=Devices,OU=OGC,OU=Tier 2,DC=offsec,DC=local
+        SamAccountName    : ELDON_KIRBY
+        objectClass       : user
+        SID               : 1648
+
+        Name              : MILLARD_KNIGHT
+        DistinguishedName : CN=MILLARD_KNIGHT,OU=Groups,OU=BDE,OU=Tier 2,DC=offsec,DC=local
+        SamAccountName    : MILLARD_KNIGHT
+        objectClass       : user
+        SID               : 3024
 
     .EXAMPLE
 
         $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
         $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
-        Get-DefaultAdministrator -Credential $Credential
+        Get-ProtectedUsersGroup
 
     #>
 
    [CmdletBinding(SupportsShouldProcess=$True)]
    param (
+    [Parameter(Mandatory=$false)]
+    [switch]
+    $Recursive,
+
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -61,8 +74,11 @@ function Get-DefaultAdministrator {
             If ($PSCmdlet.ShouldProcess("$($FunctionName) - Begin WhatIf")) {
                 $Arguments = @{}
 
+                if ($PSBoundParameters['Recursive']) { $Arguments['Recursive'] = $true }
                 if ($PSBoundParameters['Server']) { $Arguments['Server'] = $Server }
                 if ($PSBoundParameters['Credential']) { $Arguments['Credential'] = $Credential }
+
+                $OutputObject = @()
             }
         }
         Catch {
@@ -74,16 +90,16 @@ function Get-DefaultAdministrator {
         Try {
             If ($PSCmdlet.ShouldProcess("$($FunctionName) - Process WhatIf")) {
                 Try {
-                    $Administrator = Get-ADUser "$((get-addomain).DomainSID.Value)-500" `
-                         -Properties 'Name', 'Enabled', 'Created', 'PasswordLastSet', 'LastLogonDate', 'ServicePrincipalName' @Arguments
+                    $ProtectedUsersGroupUsers = Get-ADGroupMember "$((get-addomain).DomainSID.Value)-525" @Arguments
 
-                    $OutputObject = [PSCustomObject]@{
-                        'Name' = $Administrator.Name
-                        'Enabled' = $Administrator.Enabled
-                        'Created' = $Administrator.Created
-                        'PasswordLastSet' = $Administrator.PasswordLastSet
-                        'LastLogonDate' = $Administrator.LastLogonDate
-                        'ServicePrincipalName' = $Administrator.ServicePrincipalName
+                    foreach ($GroupMember in $ProtectedUsersGroupUsers) {
+                        $obj = New-Object System.Object
+                        $obj | Add-Member -type NoteProperty -Name 'Name' -Value $GroupMember.Name
+                        $obj | Add-Member -type NoteProperty -Name 'DistinguishedName' -Value $GroupMember.DistinguishedName
+                        $obj | Add-Member -type NoteProperty -Name 'SamAccountName' -Value $GroupMember.SamAccountName
+                        $obj | Add-Member -type NoteProperty -Name 'objectClass' -Value $GroupMember.objectClass
+                        $obj | Add-Member -type NoteProperty -Name 'SID' -Value $($GroupMember.SID -split '-')[-1]
+                        $OutputObject += $obj
                     }
                 }
                 Catch {
