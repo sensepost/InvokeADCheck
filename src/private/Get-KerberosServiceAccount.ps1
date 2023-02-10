@@ -1,4 +1,3 @@
-
 function Get-KerberosServiceAccount {
     <#
     .SYNOPSIS
@@ -10,7 +9,7 @@ function Get-KerberosServiceAccount {
     .PARAMETER Credential
         A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-        PS C:\ > Get-KerberosServiceAccount
+        PS C:\> Get-KerberosServiceAccount
 
         Name                  : krbtgt
         DistinguishedName     : CN=krbtgt,CN=Users,DC=offsec,DC=local
@@ -19,9 +18,9 @@ function Get-KerberosServiceAccount {
         msds-keyversionnumber : 2
 
     .EXAMPLE
-        PS C:\ > $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        PS C:\ > $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-        PS C:\ > Get-KerberosServiceAccount -Credential $Credential
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-KerberosServiceAccount -Credential $Credential
 
         Name                  : krbtgt
         DistinguishedName     : CN=krbtgt,CN=Users,DC=offsec,DC=local
@@ -30,17 +29,17 @@ function Get-KerberosServiceAccount {
         msds-keyversionnumber : 2
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {
@@ -69,10 +68,10 @@ function Get-KerberosServiceAccount {
                     $KRBTGT = Get-ADUser 'krbtgt' -Properties 'msds-keyversionnumber', 'Created', 'PasswordLastSet' @Arguments
 
                     $OutputObject = [PSCustomObject]@{
-                        'Name' = $KRBTGT.Name
-                        'DistinguishedName' = $KRBTGT.DistinguishedName
-                        'Created' = $KRBTGT.Created
-                        'PasswordLastSet' = $KRBTGT.PasswordLastSet
+                        'Name'                  = $KRBTGT.Name
+                        'DistinguishedName'     = $KRBTGT.DistinguishedName
+                        'Created'               = $KRBTGT.Created
+                        'PasswordLastSet'       = $KRBTGT.PasswordLastSet
                         'msds-keyversionnumber' = $KRBTGT.'msds-keyversionnumber'
                     }
                 }

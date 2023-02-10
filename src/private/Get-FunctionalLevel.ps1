@@ -1,4 +1,3 @@
-
 function Get-FunctionalLevel {
     <#
     .SYNOPSIS
@@ -10,23 +9,23 @@ function Get-FunctionalLevel {
     .PARAMETER Credential
         A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-        PS C:\ > Get-FunctionalLevel
+        PS C:\> Get-FunctionalLevel
 
-        Forest Functional Level Domain Functional Level
-        ----------------------- -----------------------
-            Windows2012Forest       Windows2012Domain
+        ForestFunctionalLevel       DomainFunctionalLevel
+        ---------------------       ---------------------
+        Windows2012Forest           Windows2012Domain
     .EXAMPLE
-        PS C:\ > $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        PS C:\ > $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-        PS C:\ > Get-FunctionalLevel
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-FunctionalLevel
 
-        Forest Functional Level Domain Functional Level
-        ----------------------- -----------------------
-            Windows2012Forest       Windows2012Domain
+        ForestFunctionalLevel       DomainFunctionalLevel
+        ---------------------       ---------------------
+        Windows2012Forest           Windows2012Domain
     #>
 
     [CmdletBinding(SupportsShouldProcess = $True)]
-    param (
+    Param (
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]

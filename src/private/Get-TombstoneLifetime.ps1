@@ -1,51 +1,41 @@
-
 function Get-TombstoneLifetime {
     <#
     .SYNOPSIS
-
         This function enumerates the Tombstone Lifetime attribute for the current (or specified) domain.
-
     .DESCRIPTION
-
         This function enumerates the Tombstone Lifetime attribute for the current (or specified) domain.
-
     .PARAMETER Server
-
         Specifies an AD domain controller to bind to.
-
     .PARAMETER Credential
-
-        A [Management.Automation.PSCredential] object of alternate credentials
-        for connection to the remote system.
-
+        A [Management.Automation.PSCredential] object of alternate credential for connection to the remote system.
     .EXAMPLE
-
-        Get-TombstoneLifetime
+        PS C:\> Get-TombstoneLifetime
 
         TombstoneLifetime
         -----------------
                     180
-
     .EXAMPLE
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
-        $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-TombstoneLifetime
 
-        Get-TombstoneLifetime
-
+        TombstoneLifetime
+        -----------------
+                    180
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {
@@ -73,10 +63,10 @@ function Get-TombstoneLifetime {
                 Try {
                     $ADConfigurationNamingContext = (Get-ADRootDSE @Arguments).configurationNamingContext
                     $TombstoneLifetime = Get-ADObject -Identity "CN=Directory Service,CN=Windows NT,CN=Services,$($ADConfigurationNamingContext)" `
-                         -Partition "$ADConfigurationNamingContext" -Properties TombstoneLifetime @Arguments
+                        -Partition "$ADConfigurationNamingContext" -Properties TombstoneLifetime @Arguments
 
                     $OutputObject = [PSCustomObject]@{
-                    'TombstoneLifetime' = $TombstoneLifetime.tombstoneLifetime
+                        'TombstoneLifetime' = $TombstoneLifetime.tombstoneLifetime
                     }
                 }
                 Catch {

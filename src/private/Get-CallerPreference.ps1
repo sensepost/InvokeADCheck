@@ -39,7 +39,7 @@
     #>
 
     [CmdletBinding(DefaultParameterSetName = 'AllVariables')]
-    param (
+    Param (
         [Parameter(Mandatory = $true)]
         [ValidateScript({ $_.GetType().FullName -eq 'System.Management.Automation.PSScriptCmdlet' })]
         $Cmdlet,

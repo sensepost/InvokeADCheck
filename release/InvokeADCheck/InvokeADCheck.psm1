@@ -11,54 +11,37 @@
 
 ## PRIVATE MODULE FUNCTIONS AND DATA ##
 
-
 function Get-BuiltInGroupMembership {
     <#
     .SYNOPSIS
-
         This function enumerates the Domain Controllers in the current (or specified) domain.
-
     .DESCRIPTION
-
         This function enumerates the Domain Controllers in the current (or specified) domain.
-
     .PARAMETER Recursive
-
         Recursively gather members of the Protected Users group.
-
     .PARAMETER Server
-
         Specifies an AD domain controller to bind to.
-
     .PARAMETER Credential
-
-        A [Management.Automation.PSCredential] object of alternate credentials
-        for connection to the remote system.
-
+        A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-
-        Get-BuiltInGroupMembership
-
+        PS C:\> Get-BuiltInGroupMembership
     .EXAMPLE
-
-        $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-
-        Get-BuiltInGroupMembership
-
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-BuiltInGroupMembership
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {
@@ -75,15 +58,15 @@ function Get-BuiltInGroupMembership {
                 if ($PSBoundParameters['Credential']) { $Arguments['Credential'] = $Credential }
 
                 $BuiltInADGroupSIDs = @{
-                    'Administrators' = '544'
-                    'Domain Admins' = '512'
-                    'Enterprise Admins' = '519'
-                    'Schema Admins' = '518'
+                    'Administrators'              = '544'
+                    'Domain Admins'               = '512'
+                    'Enterprise Admins'           = '519'
+                    'Schema Admins'               = '518'
                     # 'Account Operators' = '548'
-                    'Server Operators' = '549'
+                    'Server Operators'            = '549'
                     'Group Policy Creator Owners' = '520'
-                    'DNSAdmins' = '1101'
-                    'Enterprise Key Admins' = '527'
+                    'DNSAdmins'                   = '1101'
+                    'Enterprise Key Admins'       = '527'
                     # 'Exchange Domain Servers' =
                     # 'Exchange Enterprise Servers' =
                     # 'Exchange Admins' =
@@ -107,7 +90,7 @@ function Get-BuiltInGroupMembership {
 
                     foreach ($SID in $BuiltInADGroupSIDs.Values) {
                         $DN = Get-ADGroup -Filter * -Properties Name, SID |
-                             Where-Object -Property SID -like "*S-1-5*-$($SID)"
+                        Where-Object -Property SID -like "*S-1-5*-$($SID)"
                         $ADGroups += $DN
                     }
 
@@ -152,29 +135,18 @@ function Get-BuiltInGroupMembership {
 }
 
 
-
 function Get-DomainController {
     <#
     .SYNOPSIS
-
         This function enumerates the Domain Controllers in the current (or specified) domain.
-
     .DESCRIPTION
-
         This function enumerates the Domain Controllers in the current (or specified) domain.
-
     .PARAMETER Server
-
         Specifies an AD domain controller to bind to.
-
     .PARAMETER Credential
-
-        A [Management.Automation.PSCredential] object of alternate credentials
-        for connection to the remote system.
-
+        A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-
-        Get-DomainController
+        PS C:\> Get-DomainController
 
         Hostname         : DC01.offsec.local
         Operating System : Windows Server 2019 Datacenter Evaluation
@@ -186,25 +158,23 @@ function Get-DomainController {
         Read-Only        : False
 
     .EXAMPLE
-
-        $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
         Get-DomainControllerVersion
-
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {
@@ -275,54 +245,43 @@ function Get-DomainController {
 }
 
 
-
 function Get-MSDSMachineQuota {
     <#
     .SYNOPSIS
-
         This function enumerates the MS-DS-Machine-Account-Quota attribute for the current (or specified) domain.
-
     .DESCRIPTION
-
         This function enumerates the MS-DS-Machine-Account-Quota attribute for the current (or specified) domain.
-
     .PARAMETER Server
-
         Specifies an AD domain controller to bind to.
-
     .PARAMETER Credential
-
-        A [Management.Automation.PSCredential] object of alternate credentials
-        for connection to the remote system.
-
+        A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-
-        Get-MSDSMachineQuota
+        PS C:\> Get-MSDSMachineQuota
 
         DistinguishedName  ms-DS-MachineAccountQuota
         -----------------  -------------------------
         DC=offsec,DC=local                        10
-
     .EXAMPLE
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
-        $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-
-        Get-MSDSMachineQuota
-
+        PS C:\> Get-MSDSMachineQuota
+        DistinguishedName  ms-DS-MachineAccountQuota
+        -----------------  -------------------------
+        DC=offsec,DC=local                        10
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {
@@ -352,7 +311,7 @@ function Get-MSDSMachineQuota {
                         -Properties 'DistinguishedName', 'ms-DS-MachineAccountQuota'
 
                     $OutputObject = [PSCustomObject]@{
-                        'DistinguishedName' = $MAQ.'DistinguishedName'
+                        'DistinguishedName'         = $MAQ.'DistinguishedName'
                         'ms-DS-MachineAccountQuota' = $MAQ."ms-ds-machineaccountquota"
                     }
                 }
@@ -384,33 +343,20 @@ function Get-MSDSMachineQuota {
 }
 
 
-
 function Get-ProtectedUsersGroup {
     <#
     .SYNOPSIS
-
         This function enumerates the Protected Users group for the current (or specified) domain.
-
     .DESCRIPTION
-
         This function enumerates the Protected Users group for the current (or specified) domain.
-
     .PARAMETER Recursive
-
         Recursively gather members of the Protected Users group.
-
     .PARAMETER Server
-
         Specifies an AD domain controller to bind to.
-
     .PARAMETER Credential
-
-        A [Management.Automation.PSCredential] object of alternate credentials
-        for connection to the remote system.
-
+        A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-
-        Get-ProtectedUsersGroup
+        PS C:\> Get-ProtectedUsersGroup
 
         Name              : ELDON_KIRBY
         DistinguishedName : CN=ELDON_KIRBY,OU=Devices,OU=OGC,OU=Tier 2,DC=offsec,DC=local
@@ -423,31 +369,40 @@ function Get-ProtectedUsersGroup {
         SamAccountName    : MILLARD_KNIGHT
         objectClass       : user
         SID               : 3024
-
     .EXAMPLE
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
-        $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-ProtectedUsersGroup
 
-        Get-ProtectedUsersGroup
+        Name              : ELDON_KIRBY
+        DistinguishedName : CN=ELDON_KIRBY,OU=Devices,OU=OGC,OU=Tier 2,DC=offsec,DC=local
+        SamAccountName    : ELDON_KIRBY
+        objectClass       : user
+        SID               : 1648
 
+        Name              : MILLARD_KNIGHT
+        DistinguishedName : CN=MILLARD_KNIGHT,OU=Groups,OU=BDE,OU=Tier 2,DC=offsec,DC=local
+        SamAccountName    : MILLARD_KNIGHT
+        objectClass       : user
+        SID               : 3024
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [switch]
-    $Recursive,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Recursive,
 
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {
@@ -516,54 +471,44 @@ function Get-ProtectedUsersGroup {
 }
 
 
-
 function Get-TombstoneLifetime {
     <#
     .SYNOPSIS
-
         This function enumerates the Tombstone Lifetime attribute for the current (or specified) domain.
-
     .DESCRIPTION
-
         This function enumerates the Tombstone Lifetime attribute for the current (or specified) domain.
-
     .PARAMETER Server
-
         Specifies an AD domain controller to bind to.
-
     .PARAMETER Credential
-
-        A [Management.Automation.PSCredential] object of alternate credentials
-        for connection to the remote system.
-
+        A [Management.Automation.PSCredential] object of alternate credential for connection to the remote system.
     .EXAMPLE
-
-        Get-TombstoneLifetime
+        PS C:\> Get-TombstoneLifetime
 
         TombstoneLifetime
         -----------------
                     180
-
     .EXAMPLE
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
-        $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-TombstoneLifetime
 
-        Get-TombstoneLifetime
-
+        TombstoneLifetime
+        -----------------
+                    180
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {
@@ -591,10 +536,10 @@ function Get-TombstoneLifetime {
                 Try {
                     $ADConfigurationNamingContext = (Get-ADRootDSE @Arguments).configurationNamingContext
                     $TombstoneLifetime = Get-ADObject -Identity "CN=Directory Service,CN=Windows NT,CN=Services,$($ADConfigurationNamingContext)" `
-                         -Partition "$ADConfigurationNamingContext" -Properties TombstoneLifetime @Arguments
+                        -Partition "$ADConfigurationNamingContext" -Properties TombstoneLifetime @Arguments
 
                     $OutputObject = [PSCustomObject]@{
-                    'TombstoneLifetime' = $TombstoneLifetime.tombstoneLifetime
+                        'TombstoneLifetime' = $TombstoneLifetime.tombstoneLifetime
                     }
                 }
                 Catch {
@@ -625,7 +570,6 @@ function Get-TombstoneLifetime {
 }
 
 
-
 function Get-KerberosServiceAccount {
     <#
     .SYNOPSIS
@@ -637,7 +581,7 @@ function Get-KerberosServiceAccount {
     .PARAMETER Credential
         A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-        PS C:\ > Get-KerberosServiceAccount
+        PS C:\> Get-KerberosServiceAccount
 
         Name                  : krbtgt
         DistinguishedName     : CN=krbtgt,CN=Users,DC=offsec,DC=local
@@ -646,9 +590,9 @@ function Get-KerberosServiceAccount {
         msds-keyversionnumber : 2
 
     .EXAMPLE
-        PS C:\ > $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        PS C:\ > $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-        PS C:\ > Get-KerberosServiceAccount -Credential $Credential
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-KerberosServiceAccount -Credential $Credential
 
         Name                  : krbtgt
         DistinguishedName     : CN=krbtgt,CN=Users,DC=offsec,DC=local
@@ -657,17 +601,17 @@ function Get-KerberosServiceAccount {
         msds-keyversionnumber : 2
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {
@@ -696,10 +640,10 @@ function Get-KerberosServiceAccount {
                     $KRBTGT = Get-ADUser 'krbtgt' -Properties 'msds-keyversionnumber', 'Created', 'PasswordLastSet' @Arguments
 
                     $OutputObject = [PSCustomObject]@{
-                        'Name' = $KRBTGT.Name
-                        'DistinguishedName' = $KRBTGT.DistinguishedName
-                        'Created' = $KRBTGT.Created
-                        'PasswordLastSet' = $KRBTGT.PasswordLastSet
+                        'Name'                  = $KRBTGT.Name
+                        'DistinguishedName'     = $KRBTGT.DistinguishedName
+                        'Created'               = $KRBTGT.Created
+                        'PasswordLastSet'       = $KRBTGT.PasswordLastSet
                         'msds-keyversionnumber' = $KRBTGT.'msds-keyversionnumber'
                     }
                 }
@@ -731,7 +675,6 @@ function Get-KerberosServiceAccount {
 }
 
 
-
 function Get-FunctionalLevel {
     <#
     .SYNOPSIS
@@ -743,23 +686,23 @@ function Get-FunctionalLevel {
     .PARAMETER Credential
         A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-        PS C:\ > Get-FunctionalLevel
+        PS C:\> Get-FunctionalLevel
 
-        Forest Functional Level Domain Functional Level
-        ----------------------- -----------------------
-            Windows2012Forest       Windows2012Domain
+        ForestFunctionalLevel       DomainFunctionalLevel
+        ---------------------       ---------------------
+        Windows2012Forest           Windows2012Domain
     .EXAMPLE
-        PS C:\ > $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        PS C:\ > $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-        PS C:\ > Get-FunctionalLevel
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-FunctionalLevel
 
-        Forest Functional Level Domain Functional Level
-        ----------------------- -----------------------
-            Windows2012Forest       Windows2012Domain
+        ForestFunctionalLevel       DomainFunctionalLevel
+        ---------------------       ---------------------
+        Windows2012Forest           Windows2012Domain
     #>
 
     [CmdletBinding(SupportsShouldProcess = $True)]
-    param (
+    Param (
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
@@ -830,7 +773,6 @@ function Get-FunctionalLevel {
 }
 
 
-
 function Get-DefaultAdministrator {
     <#
     .SYNOPSIS
@@ -843,7 +785,7 @@ function Get-DefaultAdministrator {
         A [Management.Automation.PSCredential] object of alternate credentials
         for connection to the remote system.
     .EXAMPLE
-        PS C:\ > Get-DefaultAdministrator
+        PS C:\> Get-DefaultAdministrator
 
         Name                 : Administrator
         Enabled              : True
@@ -852,9 +794,9 @@ function Get-DefaultAdministrator {
         LastLogonDate        : 30/01/2023 11:02:51
         ServicePrincipalName : {MSSQLSvc/myhost-2.offsec.local:1432, MSSQLSvc/myhost.offsec.local:1433}
     .EXAMPLE
-        PS C:\ > $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        PS C:\ > $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-        PS C:\ > Get-DefaultAdministrator -Credential $Credential
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-DefaultAdministrator -Credential $Credential
 
         Name                 : Administrator
         Enabled              : True
@@ -865,7 +807,7 @@ function Get-DefaultAdministrator {
     #>
 
     [CmdletBinding(SupportsShouldProcess = $True)]
-    param (
+    Param (
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
@@ -979,7 +921,7 @@ function Get-CallerPreference {
     #>
 
     [CmdletBinding(DefaultParameterSetName = 'AllVariables')]
-    param (
+    Param (
         [Parameter(Mandatory = $true)]
         [ValidateScript({ $_.GetType().FullName -eq 'System.Management.Automation.PSScriptCmdlet' })]
         $Cmdlet,

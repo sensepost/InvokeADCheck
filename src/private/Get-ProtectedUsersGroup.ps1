@@ -1,30 +1,17 @@
-
 function Get-ProtectedUsersGroup {
     <#
     .SYNOPSIS
-
         This function enumerates the Protected Users group for the current (or specified) domain.
-
     .DESCRIPTION
-
         This function enumerates the Protected Users group for the current (or specified) domain.
-
     .PARAMETER Recursive
-
         Recursively gather members of the Protected Users group.
-
     .PARAMETER Server
-
         Specifies an AD domain controller to bind to.
-
     .PARAMETER Credential
-
-        A [Management.Automation.PSCredential] object of alternate credentials
-        for connection to the remote system.
-
+        A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-
-        Get-ProtectedUsersGroup
+        PS C:\> Get-ProtectedUsersGroup
 
         Name              : ELDON_KIRBY
         DistinguishedName : CN=ELDON_KIRBY,OU=Devices,OU=OGC,OU=Tier 2,DC=offsec,DC=local
@@ -37,31 +24,40 @@ function Get-ProtectedUsersGroup {
         SamAccountName    : MILLARD_KNIGHT
         objectClass       : user
         SID               : 3024
-
     .EXAMPLE
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
 
-        $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-ProtectedUsersGroup
 
-        Get-ProtectedUsersGroup
+        Name              : ELDON_KIRBY
+        DistinguishedName : CN=ELDON_KIRBY,OU=Devices,OU=OGC,OU=Tier 2,DC=offsec,DC=local
+        SamAccountName    : ELDON_KIRBY
+        objectClass       : user
+        SID               : 1648
 
+        Name              : MILLARD_KNIGHT
+        DistinguishedName : CN=MILLARD_KNIGHT,OU=Groups,OU=BDE,OU=Tier 2,DC=offsec,DC=local
+        SamAccountName    : MILLARD_KNIGHT
+        objectClass       : user
+        SID               : 3024
     #>
 
-   [CmdletBinding(SupportsShouldProcess=$True)]
-   param (
-    [Parameter(Mandatory=$false)]
-    [switch]
-    $Recursive,
+    [CmdletBinding(SupportsShouldProcess = $True)]
+    Param (
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Recursive,
 
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [string]
-    $Server,
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Server,
 
-    [Parameter(Mandatory=$false)]
-    [Management.Automation.PSCredential]
-    [Management.Automation.CredentialAttribute()]
-    $Credential = [Management.Automation.PSCredential]::Empty
+        [Parameter(Mandatory = $false)]
+        [Management.Automation.PSCredential]
+        [Management.Automation.CredentialAttribute()]
+        $Credential = [Management.Automation.PSCredential]::Empty
     )
 
     Begin {

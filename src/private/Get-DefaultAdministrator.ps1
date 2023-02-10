@@ -1,4 +1,3 @@
-
 function Get-DefaultAdministrator {
     <#
     .SYNOPSIS
@@ -11,7 +10,7 @@ function Get-DefaultAdministrator {
         A [Management.Automation.PSCredential] object of alternate credentials
         for connection to the remote system.
     .EXAMPLE
-        PS C:\ > Get-DefaultAdministrator
+        PS C:\> Get-DefaultAdministrator
 
         Name                 : Administrator
         Enabled              : True
@@ -20,9 +19,9 @@ function Get-DefaultAdministrator {
         LastLogonDate        : 30/01/2023 11:02:51
         ServicePrincipalName : {MSSQLSvc/myhost-2.offsec.local:1432, MSSQLSvc/myhost.offsec.local:1433}
     .EXAMPLE
-        PS C:\ > $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        PS C:\ > $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-        PS C:\ > Get-DefaultAdministrator -Credential $Credential
+        PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\> Get-DefaultAdministrator -Credential $Credential
 
         Name                 : Administrator
         Enabled              : True
@@ -33,7 +32,7 @@ function Get-DefaultAdministrator {
     #>
 
     [CmdletBinding(SupportsShouldProcess = $True)]
-    param (
+    Param (
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]
