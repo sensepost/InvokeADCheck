@@ -1,5 +1,5 @@
 TOPIC
-    about_ADChecks
+    about_InvokeADCheck
 
 SHORT DESCRIPTION
     PowerShell module to check the security of Active Directory
@@ -14,4 +14,4 @@ KEYWORDS
     ActiveDirectory
 
 SEE ALSO
-    https://github.com/ocd-nl/ADChecks
+    https://github.com/ocd-nl/InvokeADCheck

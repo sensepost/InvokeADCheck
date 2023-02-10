@@ -1,26 +1,16 @@
 
-function Get-KerberosAccount {
+function Get-KerberosServiceAccount {
     <#
     .SYNOPSIS
-
         This function enumerates the KRBTGT account for the current (or specified) domain and returns all relevant account information.
-
     .DESCRIPTION
-
         This function enumerates the KRBTGT account for the current (or specified) domain and returns all relevant account information.
-
     .PARAMETER Server
-
         Specifies an AD domain controller to bind to.
-
     .PARAMETER Credential
-
-        A [Management.Automation.PSCredential] object of alternate credentials
-        for connection to the remote system.
-
+        A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
-
-        Get-KerberosAccount
+        PS C:\ > Get-KerberosServiceAccount
 
         Name                  : krbtgt
         DistinguishedName     : CN=krbtgt,CN=Users,DC=offsec,DC=local
@@ -29,11 +19,9 @@ function Get-KerberosAccount {
         msds-keyversionnumber : 2
 
     .EXAMPLE
-
-        $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
-
-        Get-KerberosAccount -Credential $Credential
+        PS C:\ > $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
+        PS C:\ > $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
+        PS C:\ > Get-KerberosServiceAccount -Credential $Credential
 
         Name                  : krbtgt
         DistinguishedName     : CN=krbtgt,CN=Users,DC=offsec,DC=local

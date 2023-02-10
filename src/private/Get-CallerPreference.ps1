@@ -1,7 +1,7 @@
 ﻿function Get-CallerPreference {
     <#
     .Synopsis
-       Fetches "Preference" variable values from the caller's scope.
+        Fetches "Preference" variable values from the caller's scope.
     .DESCRIPTION
        Script module functions do not automatically inherit their caller's variables, but they can be
        obtained through the $PSCmdlet variable in Advanced Functions.  This function is a helper function
@@ -54,12 +54,10 @@
     begin {
         $filterHash = @{}
     }
-    
+
     process {
-        if ($null -ne $Name)
-        {
-            foreach ($string in $Name)
-            {
+        if ($null -ne $Name) {
+            foreach ($string in $Name) {
                 $filterHash[$string] = $true
             }
         }
@@ -69,44 +67,44 @@
         # List of preference variables taken from the about_Preference_Variables help file in PowerShell version 4.0
 
         $vars = @{
-            'ErrorView' = $null
-            'FormatEnumerationLimit' = $null
-            'LogCommandHealthEvent' = $null
-            'LogCommandLifecycleEvent' = $null
-            'LogEngineHealthEvent' = $null
-            'LogEngineLifecycleEvent' = $null
-            'LogProviderHealthEvent' = $null
-            'LogProviderLifecycleEvent' = $null
-            'MaximumAliasCount' = $null
-            'MaximumDriveCount' = $null
-            'MaximumErrorCount' = $null
-            'MaximumFunctionCount' = $null
-            'MaximumHistoryCount' = $null
-            'MaximumVariableCount' = $null
-            'OFS' = $null
-            'OutputEncoding' = $null
-            'ProgressPreference' = $null
-            'PSDefaultParameterValues' = $null
-            'PSEmailServer' = $null
+            'ErrorView'                     = $null
+            'FormatEnumerationLimit'        = $null
+            'LogCommandHealthEvent'         = $null
+            'LogCommandLifecycleEvent'      = $null
+            'LogEngineHealthEvent'          = $null
+            'LogEngineLifecycleEvent'       = $null
+            'LogProviderHealthEvent'        = $null
+            'LogProviderLifecycleEvent'     = $null
+            'MaximumAliasCount'             = $null
+            'MaximumDriveCount'             = $null
+            'MaximumErrorCount'             = $null
+            'MaximumFunctionCount'          = $null
+            'MaximumHistoryCount'           = $null
+            'MaximumVariableCount'          = $null
+            'OFS'                           = $null
+            'OutputEncoding'                = $null
+            'ProgressPreference'            = $null
+            'PSDefaultParameterValues'      = $null
+            'PSEmailServer'                 = $null
             'PSModuleAutoLoadingPreference' = $null
-            'PSSessionApplicationName' = $null
-            'PSSessionConfigurationName' = $null
-            'PSSessionOption' = $null
+            'PSSessionApplicationName'      = $null
+            'PSSessionConfigurationName'    = $null
+            'PSSessionOption'               = $null
 
-            'ErrorActionPreference' = 'ErrorAction'
-            'DebugPreference' = 'Debug'
-            'ConfirmPreference' = 'Confirm'
-            'WhatIfPreference' = 'WhatIf'
-            'VerbosePreference' = 'Verbose'
-            'WarningPreference' = 'WarningAction'
+            'ErrorActionPreference'         = 'ErrorAction'
+            'DebugPreference'               = 'Debug'
+            'ConfirmPreference'             = 'Confirm'
+            'WhatIfPreference'              = 'WhatIf'
+            'VerbosePreference'             = 'Verbose'
+            'WarningPreference'             = 'WarningAction'
         }
 
         foreach ($entry in $vars.GetEnumerator()) {
             if (([string]::IsNullOrEmpty($entry.Value) -or -not $Cmdlet.MyInvocation.BoundParameters.ContainsKey($entry.Value)) -and
                 ($PSCmdlet.ParameterSetName -eq 'AllVariables' -or $filterHash.ContainsKey($entry.Name))) {
-                
+
                 $variable = $Cmdlet.SessionState.PSVariable.Get($entry.Key)
-                
+
                 if ($null -ne $variable) {
                     if ($SessionState -eq $ExecutionContext.SessionState) {
                         Set-Variable -Scope 1 -Name $variable.Name -Value $variable.Value -Force -Confirm:$false -WhatIf:$false
@@ -122,15 +120,12 @@
             foreach ($varName in $filterHash.Keys) {
                 if (-not $vars.ContainsKey($varName)) {
                     $variable = $Cmdlet.SessionState.PSVariable.Get($varName)
-                
-                    if ($null -ne $variable)
-                    {
-                        if ($SessionState -eq $ExecutionContext.SessionState)
-                        {
+
+                    if ($null -ne $variable) {
+                        if ($SessionState -eq $ExecutionContext.SessionState) {
                             Set-Variable -Scope 1 -Name $variable.Name -Value $variable.Value -Force -Confirm:$false -WhatIf:$false
                         }
-                        else
-                        {
+                        else {
                             $SessionState.PSVariable.Set($variable.Name, $variable.Value)
                         }
                     }

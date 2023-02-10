@@ -20,6 +20,7 @@ psgalleryapi.txt
 ~$*
 *~
 *.pfx
+coverage.xml
 
 #############
 ## Windows detritus
