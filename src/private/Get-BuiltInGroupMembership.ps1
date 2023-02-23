@@ -12,6 +12,18 @@ function Get-BuiltInGroupMembership {
         A [Management.Automation.PSCredential] object of alternate credentials for connection to the remote system.
     .EXAMPLE
         PS C:\> Get-BuiltInGroupMembership
+
+        Group                       Members
+        ---------                   -------
+        Account Operators           {CN=test1,CN=Users,DC=offsec,DC=local, CN=Administrator,CN=Users,DC=offsec,DC=local}
+        Enterprise Admins           CN=Administrator,CN=Users,DC=offsec,DC=local
+        Schema Admins               CN=Administrator,CN=Users,DC=offsec,DC=local
+        Domain Admins               CN=Administrator,CN=Users,DC=offsec,DC=local
+        Server Operators
+        Enterprise Key Admins
+        Administrators              {CN=User1,CN=Users,DC=defsec,DC=local, CN=Domain Admins,CN=Users,DC=offsec,DC=local, CN=Enterprise Admins,CN=Users,DC=offsec,DC=local, CN=Administrator,CN=Users,DC=offsec,DC=lo...
+        DnsAdmins                   CN=test1,CN=Users,DC=offsec,DC=local
+        Group Policy Creator Owners CN=Administrator,CN=Users,DC=offsec,DC=local
     .EXAMPLE
         PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
         PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
@@ -85,7 +97,7 @@ function Get-BuiltInGroupMembership {
                         $Members = Get-ADGroupMember $ADGroup @Arguments
 
                         $Obj = [PSCustomObject]@{
-                            'GroupName' = $ADGroup.Name
+                            'Group' = $ADGroup.Name
                             'Members'   = $Members.DistinguishedName
                         }
 
