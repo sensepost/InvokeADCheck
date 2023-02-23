@@ -1,11 +1,9 @@
 function Get-BuiltInGroupMembership {
     <#
     .SYNOPSIS
-        This function enumerates the Domain Controllers in the current (or specified) domain.
+        This function enumerates the members of built-in Active Directory groups for the current (or specified) domain.
     .DESCRIPTION
-        This function enumerates the Domain Controllers in the current (or specified) domain.
-    .PARAMETER Recursive
-        Recursively gather members of the Protected Users group.
+        This function enumerates the members of built-in Active Directory groups for the current (or specified) domain.
     .PARAMETER Server
         Specifies an AD domain controller to bind to.
     .PARAMETER Credential
