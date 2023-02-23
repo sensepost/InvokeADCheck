@@ -84,14 +84,12 @@ function Get-BuiltInGroupMembership {
                     foreach ($ADGroup in $ADGroups) {
                         $Members = Get-ADGroupMember $ADGroup @Arguments
 
-                        foreach ($Member in $Members) {
-                            # $obj = New-Object System.Object
-                            # $obj | Add-Member -type NoteProperty -Name 'Name' -Value $Member.Name
-                            # $obj | Add-Member -type NoteProperty -Name 'SamAccountName' -Value $Member.SamAccountName
-                            # $obj | Add-Member -type NoteProperty -Name 'ObjectClass' -Value $Member.ObjectClass
-                            # $obj | Add-Member -type NoteProperty -Name 'Group Name' -Value $ADGroup
-                            # $OutputObject += $obj
+                        $Obj = [PSCustomObject]@{
+                            'GroupName' = $ADGroup.Name
+                            'Members' = $Members.DistinguishedName
                         }
+
+                        $OutputObject += $Obj
                     }
                 }
                 Catch {
