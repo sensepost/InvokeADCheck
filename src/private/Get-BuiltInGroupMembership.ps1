@@ -49,7 +49,7 @@ function Get-BuiltInGroupMembership {
                     'Domain Admins'               = '512'
                     'Enterprise Admins'           = '519'
                     'Schema Admins'               = '518'
-                    # 'Account Operators' = '548'
+                    'Account Operators'           = '548'
                     'Server Operators'            = '549'
                     'Group Policy Creator Owners' = '520'
                     'DNSAdmins'                   = '1101'
@@ -86,7 +86,7 @@ function Get-BuiltInGroupMembership {
 
                         $Obj = [PSCustomObject]@{
                             'GroupName' = $ADGroup.Name
-                            'Members' = $Members.DistinguishedName
+                            'Members'   = $Members.DistinguishedName
                         }
 
                         $OutputObject += $Obj
