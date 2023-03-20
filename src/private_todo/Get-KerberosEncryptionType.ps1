@@ -1,31 +1,13 @@
-﻿Function Get-KerberosEncryptionType {
-    # https://raw.githubusercontent.com/jeremyts/ActiveDirectoryDomainServices/master/Audit/Get-UserSupportedEncryptionTypes.ps1
-    param (
-        [int]$key
-    )
-    switch ($key) {
-        "1" { $SupportedEncryptionTypes = @("DES_CRC") }
-        "2" { $SupportedEncryptionTypes = @("DES_MD5") }
-        "3" { $SupportedEncryptionTypes = @("DES_CRC", "DES_MD5") }
-        "4" { $SupportedEncryptionTypes = @("RC4") }
-        "8" { $SupportedEncryptionTypes = @("AES128") }
-        "16" { $SupportedEncryptionTypes = @("AES256") }
-        "24" { $SupportedEncryptionTypes = @("AES128", "AES256") }
-        "28" { $SupportedEncryptionTypes = @("RC4", "AES128", "AES256") }
-        "31" { $SupportedEncryptionTypes = @("DES_CRC", "DES_MD5", "RC4", "AES128", "AES256") }
-        default { $SupportedEncryptionTypes = @("Undefined value of $key") }
-    }
-    $SupportedEncryptionTypes
-}
-$Users = Get-ADUser -Properties * -LdapFilter "(&(objectclass=user)(objectcategory=user)(msDS-SupportedEncryptionTypes=*)(!msDS-SupportedEncryptionTypes=0))" | Select-Object Name, @{N = "EncryptionTypes"; E = { Get-KerberosEncryptionTypes $($_."msDS-SupportedEncryptionTypes") } }
-ForEach ($User in $Users) {
-    $User.Name
-    ForEach ($EncryptionType in $User.EncryptionTypes) {
-        $EncryptionType
-    }
+﻿$EncTypes = @("Not defined - defaults to RC4_HMAC_MD5", "DES_CBC_CRC", "DES_CBC_MD5", "DES_CBC_CRC | DES_CBC_MD5", "RC4", "DES_CBC_CRC | RC4", "DES_CBC_MD5 | RC4", "DES_CBC_CRC | DES_CBC_MD5 | RC4", "AES 128", "DES_CBC_CRC | AES 128", "DES_CBC_MD5 | AES 128", "DES_CBC_CRC | DES_CBC_MD5 | AES 128", "RC4 | AES 128", "DES_CBC_CRC | RC4 | AES 128", "DES_CBC_MD5 | RC4 | AES 128", "DES_CBC_CBC | DES_CBC_MD5 | RC4 | AES 128", "AES 256", "DES_CBC_CRC | AES 256", "DES_CBC_MD5 | AES 256", "DES_CBC_CRC | DES_CBC_MD5 | AES 256", "RC4 | AES 256", "DES_CBC_CRC | RC4 | AES 256", "DES_CBC_MD5 | RC4 | AES 256", "DES_CBC_CRC | DES_CBC_MD5 | RC4 | AES 256", "AES 128 | AES 256", "DES_CBC_CRC | AES 128 | AES 256", "DES_CBC_MD5 | AES 128 | AES 256", "DES_CBC_MD5 | DES_CBC_MD5 | AES 128 | AES 256", "RC4 | AES 128 | AES 256", "DES_CBC_CRC | RC4 | AES 128 | AES 256", "DES_CBC_MD5 | RC4 | AES 128 | AES 256", "DES+A1:C33_CBC_MD5 | DES_CBC_MD5 | RC4 | AES 128 | AES 256")
+
+
+$DomainUsers = Get-ADUser -LdapFilter "(&(objectclass=user)(objectcategory=user)(msDS-SupportedEncryptionTypes=*)(!msDS-SupportedEncryptionTypes=0))" -properties *
+foreach ($etype in $DomainUsers) {
+    $etype.Name + "," + $EncTypes[$etype.'msDS-SupportedEncryptionTypes']
 }
 
-$computers = Get-ADComputer -properties msDS-SupportedEncryptionTypes -filter *
-$computers | Sort-Object -Unique  msDS-SupportedEncryptionTypes | ForEach-Object {
-    Write-Output "Found $($_.'msDS-SupportedEncryptionTypes'), which resolves to $(Get-KerberosEncryptionTypes -key $_.'msDS-SupportedEncryptionTypes')"
+
+$Computers = Get-ADComputer -properties msDS-SupportedEncryptionTypes -filter *
+foreach ($etype in $Computers) {
+    $etype.Name + "," + $EncTypes[$etype.'msDS-SupportedEncryptionTypes']
 }
