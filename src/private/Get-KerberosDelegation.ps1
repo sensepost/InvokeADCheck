@@ -1,9 +1,9 @@
 function Get-KerberosDelegation {
     <#
     .SYNOPSIS
-        This function enumerates xxx in the current (or specified) domain.
+        This function enumerates any Kerberos Delegation in the current (or specified) domain.
     .DESCRIPTION
-        This function enumerates xxx in the current (or specified) domain.
+        This function enumerates any Kerberos Delegation in the current (or specified) domain.
     .PARAMETER Server
         Specifies an AD domain controller to bind to.
     .PARAMETER Credential
@@ -11,6 +11,12 @@ function Get-KerberosDelegation {
     .EXAMPLE
         PS C:\> Get-KerberosDelegation
 
+        DistinguishedName                  : CN=CLIENT01,CN=Computers,DC=offsec,DC=local
+        Name                               : CLIENT01
+        ServicePrincipalName               : {TERMSRV/CLIENT01.offsec.local, RestrictedKrbHost/CLIENT01.offsec.local, HOST/CLIENT01.offsec.local, TERMSRV/CLIENT01...}
+        KerberosDelegationServices         : All Services
+        DelegationType                     : Unconstrained
+        KerberosDelegationAllowedProtocols : Kerberos
     .EXAMPLE
         PS C:\> $SecurePassword = ConvertTo-SecureString 'Welcome01!' -AsPlainText -Force
         PS C:\> $Credential = New-Object System.Management.Automation.PSCredential('OFFSEC\test', $SecurePassword)
