@@ -1,0 +1,17 @@
+TOPIC
+    about_InvokeADCheck
+
+SHORT DESCRIPTION
+    PowerShell module to check the security of Active Directory
+
+LONG DESCRIPTION
+    PowerShell module to check the security of Active Directory
+
+EXAMPLES
+    TBD
+
+KEYWORDS
+    ActiveDirectory
+
+SEE ALSO
+    https://github.com/sensepost/InvokeADCheck

@@ -1,0 +1,99 @@
+// Available variables which can be used inside of strings.
+// ${workspaceRoot}: the root folder of the team
+// ${file}: the current opened file
+// ${relativeFile}: the current opened file relative to workspaceRoot
+// ${fileBasename}: the current opened file's basename
+// ${fileDirname}: the current opened file's dirname
+// ${fileExtname}: the current opened file's extension
+// ${cwd}: the current working directory of the spawned process
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Module",
+            "type": "shell",
+            "windows": {
+                "command": "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File ${workspaceRoot}\\Build.ps1 -BuildModule"
+            },
+            "linux": {
+                "command": "/usr/bin/powershell -NoProfile -File ${workspaceRoot}\\Build.ps1 -BuildModule"
+            },
+            "osx": {
+                "command": "/usr/local/bin/powershell -NoProfile -File ${workspaceRoot}\\Build.ps1 -BuildModule"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run Tests",
+            "type": "shell",
+            "windows": {
+                "command": "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File ${workspaceRoot}\\Build.ps1 -Test"
+            },
+            "linux": {
+                "command": "/usr/bin/powershell -NoProfile -File ${workspaceRoot}\\Build.ps1 -Test"
+            },
+            "osx": {
+                "command": "/usr/local/bin/powershell -NoProfile -File ${workspaceRoot}\\Build.ps1 -Test"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Test, Build, Install and Load Module",
+            "type": "shell",
+            "windows": {
+                "command": "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File ${workspaceRoot}\\Build.ps1 -TestBuildAndInstallModule"
+            },
+            "linux": {
+                "command": "/usr/bin/powershell -NoProfile -File ${workspaceRoot}\\Build.ps1  -TestBuildAndInstallModule"
+            },
+            "osx": {
+                "command": "/usr/local/bin/powershell -NoProfile -File ${workspaceRoot}\\Build.ps1 -TestBuildAndInstallModule"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Insert Missing Comment Based Help",
+            "type": "shell",
+            "windows": {
+                "command": "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File ${workspaceRoot}\\Build.ps1 -AddMissingCBH"
+            },
+            "linux": {
+                "command": "/usr/bin/powershell -NoProfile -File ${workspaceRoot}\\Build.ps1 -AddMissingCBH"
+            },
+            "osx": {
+                "command": "/usr/local/bin/powershell -NoProfile -File ${workspaceRoot}\\Build.ps1 -AddMissingCBH"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}
