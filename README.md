@@ -8,6 +8,8 @@ InvokeADCheck is a PowerShell module designed to streamline the assessment of Ac
 It performs various checks to identify potential security misconfigurations, weaknesses, and adherence to best practices.
 By running targeted checks through the PowerShell CLI, this module provides detailed results and actionable insights. It equips IT administrators and security professionals with the means to proactively identify and address potential security risks in AD environments.
 
+**Note:** InvokeADCheck is primarily intended for use in smaller Active Directory domains within a single AD forest. This module is provided "as-is" with no support or guarantees.
+
 ## Requirements
 
 To use InvokeADCheck, ensure the following prerequisites are met:
