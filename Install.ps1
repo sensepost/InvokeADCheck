@@ -1,6 +1,6 @@
 # Run this in an administrative PowerShell prompt to install the InvokeADCheck PowerShell module:
 #
-# iex (New-Object Net.WebClient).DownloadString("https://github.com/sensepost/InvokeADCheck/raw/master/Install.ps1")
+# iex(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/sensepost/InvokeADCheck/refs/heads/main/Install.ps1")
 
 # Some general variables
 $ModuleName = 'InvokeADCheck'
