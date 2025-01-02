@@ -27,7 +27,7 @@ Optional:
 To install the module directly, run the following PowerShell command:
 
 ```PowerShell
-iex(New-Object Net.WebClient).DownloadString("https://github.com/sensepost/InvokeADCheck/raw/master/Install.ps1")
+iex(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/sensepost/InvokeADCheck/refs/heads/main/Install.ps1")
 
 Import-Module .\InvokeADCheck.psm1
 ```
